@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        @keyframes growShrink {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(2);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #111111;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+
+            animation-name: rotate;
+            animation-duration: 11s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+
+        }
+
+        .circle {
+            width: 30vh;
+            height: 30vh;
+            background: linear-gradient(125deg, #A8E6CE, #FFC3A0);
+            border-radius: 50%;
+            animation-name: growShrink;
+            animation-duration: 11s;
+            animation-iteration-count: infinite;
+            animation-timing-function: ease-in-out;
+            box-shadow: inset #dddddd 0px 0px 1vh 1px, #dddddd 0px 0px 1vh 1px;
+        }
+
+        #timer {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            font-size: 18px;
+            color: transparent;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+        }
+
+        #timer::before {
+            content: attr(data-text);
+            background: linear-gradient(45deg, #FFC3A0, #A8E6CE);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="circle"></div>
+    </div>
+    <div id="timer" data-text="Breaths: 0"></div>
+
+    <script>
+        // Update timer every second
+        setInterval(updateTimer, 11000);
+        updateTimer();
+
+        function updateTimer() {
+            var circle = document.querySelector('.circle');
+            var animationDuration = parseFloat(getComputedStyle(circle).animationDuration);
+            var currentTime = (performance.now() / 1000) / animationDuration;
+
+            var timer = document.getElementById('timer');
+            timer.setAttribute('data-text', 'Breaths: ' + currentTime.toFixed(0));
+        }
+    </script>
+</body>
+
+</html>
